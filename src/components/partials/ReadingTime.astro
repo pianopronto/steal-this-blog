@@ -1,0 +1,8 @@
+---
+import readingTime from "reading-time";
+
+const { post } = Astro.props;
+const { text } = readingTime(post.body, { wordsPerMinute: 120 });
+---
+
+<span>{text}</span>

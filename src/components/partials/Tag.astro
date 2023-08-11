@@ -1,0 +1,20 @@
+---
+import { slug as slugify } from "github-slugger";
+
+const { term = "tags", text, count, link = false } = Astro.props;
+const slug = slugify(text);
+---
+
+{
+  link ? (
+    <a href={`/${term}/${slug}/`} class="tag">
+      {text}
+      {count !== void 0 && <span>{count}</span>}
+    </a>
+  ) : (
+    <div class="tag">
+      {text}
+      {count !== void 0 && <span>{count}</span>}
+    </div>
+  )
+}

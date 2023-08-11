@@ -1,0 +1,69 @@
+---
+import * as consts from "@/consts";
+
+import mime from "mime";
+
+const page = {
+  title: "Blog",
+  description: "",
+  authors: [],
+  tags: [],
+  ...Astro.props?.page?.data,
+};
+
+if (page.image instanceof Promise) {
+  try {
+    page.image = (await page.image).default;
+  } catch {
+    delete page.image;
+  }
+}
+page.image ??= (await import("@/assets/meta/default.png")).default;
+
+const { title, description, authors, tags, image } = page;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const images = {
+  fb: new URL("assets/meta/fb-placeholder.jpg", Astro.site),
+  twitter: new URL("assets/meta/twitter-placeholder.jpg", Astro.site),
+};
+---
+
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<title>{title} | {consts.COMPANY_NAME}</title>
+<meta name="description" content={description} />
+{tags && <meta name="keywords" content={tags} />}
+{authors && <meta name="author" content={authors} />}
+{
+  image && (
+    <link
+      rel="image_src"
+      type={mime.getType(image.format)}
+      href={new URL(image.src, Astro.site)}
+    />
+  )
+}
+<meta name="medium" content="blog" />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:site_name" content={consts.SITE_TITLE} />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={images.fb} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:type" content="website" />
+
+<meta property="twitter:site" content="" />
+<meta property="twitter:url" content={canonical} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content={images.twitter} />

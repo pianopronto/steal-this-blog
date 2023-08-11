@@ -1,0 +1,76 @@
+---
+import * as consts from "@/consts";
+
+import { slug as slugify } from "github-slugger";
+
+import { getTaxonomy, getCollectionFilter, getAuthor } from "@/content/utils";
+
+import BaseLayout from "@/components/layout/Base.astro";
+import PostGrid from "@/components/post/Grid.astro";
+import AboutAuthor from "@/components/partials/AboutAuthor.astro";
+
+export async function getStaticPaths({ paginate, ...rest }) {
+  const routes = [];
+  const terms = ["tags", "authors"];
+  for (const term of terms) {
+    const values = await getTaxonomy("blog", term);
+    for (const { value, count } of values) {
+      const posts = await getCollectionFilter("blog", term, value);
+      const route = paginate(posts, {
+        params: { term, value: slugify(value) },
+        props: { title: value },
+        pageSize: consts.PAGE_SIZE,
+      });
+      routes.push(route);
+    }
+  }
+  return routes;
+}
+
+const { term, value } = Astro.params;
+const { title, page: pagination } = Astro.props;
+
+let description = null,
+  image = null;
+
+switch (term) {
+  case "tags":
+    description = `Explore our blog for captivating articles tagged "${title}."`;
+    break;
+  case "authors":
+    const author = await getAuthor(value);
+    description = `Explore our blog for articles posted by ${title}.`;
+    image = author.data.image;
+    break;
+}
+
+const posts = pagination.data;
+
+const page = {
+  data: {
+    title:
+      title +
+      (pagination.currentPage > 1 ? ` | Page ${pagination.currentPage}` : ""),
+    description: description,
+    image: image ?? import(`../../../assets/meta/${term}.png`),
+  },
+};
+---
+
+<BaseLayout layout="wide" page={page}>
+  <PostGrid
+    posts={posts}
+    pagination={pagination}
+    layout="normal"
+    baseUrl={`/${term}/${value}`}
+  >
+    <div class="prose col-span-full lg:prose-xl">
+      <h1>{title}</h1>
+      {term === "authors" && <AboutAuthor author={value} title="" />}
+      <p>
+        A collection of {posts.length}
+        {posts.length == 1 ? "post" : "posts"}
+      </p>
+    </div>
+  </PostGrid>
+</BaseLayout>

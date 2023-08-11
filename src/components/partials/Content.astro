@@ -1,0 +1,13 @@
+---
+import Blurb from "@/components/partials/Blurb.astro";
+
+// Inject any MDX components here
+const components = {
+  Blurb,
+};
+
+const { content } = Astro.props;
+const { Content } = await content.render();
+---
+
+<Content components={components} />

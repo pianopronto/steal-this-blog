@@ -1,0 +1,19 @@
+---
+import { similarPosts } from "@/content/utils";
+import PostBlock from "@/components/post/Block.astro";
+
+const { post } = Astro.props;
+
+const similar = (await similarPosts(post)).slice(0, 3);
+---
+
+<div class="post-grid layout-normal">
+  {
+    /* post-block_n-1 post-block_n-2 post-block_n-3 post-block_n-4 */
+    similar.map((post, i) => {
+      return (
+        <PostBlock post={post} class={`post-block_n-${Math.min(i + 1, 4)}`} />
+      );
+    })
+  }
+</div>

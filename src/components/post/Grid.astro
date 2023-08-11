@@ -1,0 +1,26 @@
+---
+import PostBlock from "@/components/post/Block.astro";
+import Pagination from "@/components/partials/Pagination.astro";
+
+const { posts, pagination, layout = "normal", baseUrl } = Astro.props;
+---
+
+{/* layout-featured layout-normal */}
+<div class:list={["post-grid", `layout-${layout}`]}>
+  <slot />
+
+  {
+    /* post-block_n-1 post-block_n-2 post-block_n-3 post-block_n-4 */
+    posts.map((post, i) => {
+      return (
+        <PostBlock
+          post={post}
+          class={`post-block_n-${Math.min(i + 1, 4)}`}
+          horizontal={i == 0 && layout == "featured"}
+        />
+      );
+    })
+  }
+</div>
+
+{!pagination.hide && <Pagination page={pagination} url={baseUrl} />}

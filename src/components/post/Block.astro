@@ -1,0 +1,45 @@
+---
+import { Icon } from "astro-icon";
+
+import PostImage from "@/components/post/Image.astro";
+import PostAttributes from "@/components/post/Attributes.astro";
+import Tag from "@/components/partials/Tag.astro";
+
+const { post, class: className, horizontal } = Astro.props;
+const { title, description, tags } = post.data;
+---
+
+<div
+  class:list={[
+    "post-block",
+    { "post-block_horizontal": horizontal },
+    className,
+  ]}
+>
+  <a href={`/${post.slug}/`}>
+    <div>
+      <PostImage post={post} />
+    </div>
+
+    <div>
+      <div>
+        <div class="tags">
+          {tags.map((tag) => <Tag text={tag} />)}
+        </div>
+        <h3>
+          {title}
+        </h3>
+        <p>
+          {description}
+        </p>
+
+        <PostAttributes post={post} />
+
+        <div class="read-more">
+          Read More
+          <Icon class="w-4" name="mdi:chevron-double-right" />
+        </div>
+      </div>
+    </div>
+  </a>
+</div>

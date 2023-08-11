@@ -1,0 +1,26 @@
+---
+import { getTaxonomy } from "@/content/utils";
+
+import BaseLayout from "@/components/layout/Base.astro";
+import Tag from "@/components/partials/Tag.astro";
+
+const values = await getTaxonomy("blog", "tags");
+
+const page = {
+  data: {
+    title: "Tags",
+    description:
+      "Navigate our blog by browsing through an array of tags. Explore diverse topics, trends, and insights catered to your interests. Find the content that resonates with you and stay informed with our comprehensive tag-based navigation.",
+    image: import("@/assets/meta/tags.png"),
+  },
+};
+---
+
+<BaseLayout layout="wide" page={page}>
+  <div class="prose lg:prose-xl">
+    <h1>Tags</h1>
+  </div>
+  <div class="tags mt-12 gap-3">
+    {values.map(({ value, count }) => <Tag text={value} count={count} link />)}
+  </div>
+</BaseLayout>

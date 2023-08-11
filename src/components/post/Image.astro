@@ -1,0 +1,18 @@
+---
+import { Image } from "astro:assets";
+
+import placeholder from "@/assets/blog-placeholder-about.jpg";
+
+const { post } = Astro.props;
+const { title, heroImage } = post.data;
+---
+
+<div>
+  {
+    heroImage ? (
+      <Image src={heroImage} alt={title} />
+    ) : (
+      <Image src={placeholder} alt={title} />
+    )
+  }
+</div>

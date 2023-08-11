@@ -1,0 +1,47 @@
+---
+import * as consts from "@/consts";
+
+import { getCollection } from "@/content/utils";
+
+import BaseLayout from "@/components/layout/Base.astro";
+import PostGrid from "@/components/post/Grid.astro";
+
+export async function getStaticPaths({ paginate }) {
+  const posts = await getCollection("blog", false);
+  return paginate(posts, {
+    pageSize: consts.PAGE_SIZE,
+  });
+}
+
+const { page: pagination } = Astro.props;
+const posts = pagination.data;
+
+const page = {
+  data: {
+    title:
+      consts.SITE_TITLE +
+      (pagination.currentPage > 1 ? ` | Page ${pagination.currentPage}` : ""),
+    description: consts.SITE_DESCRIPTION,
+  },
+};
+---
+
+<BaseLayout layout="wide" page={page}>
+  <PostGrid
+    posts={posts}
+    pagination={pagination}
+    layout={pagination.currentPage == 1 ? "featured" : "normal"}
+  >
+    {
+      pagination.currentPage > 1 && (
+        <div class="prose col-span-full lg:prose-xl">
+          <h1>All Posts</h1>
+          <p>
+            A collection of {posts.length}
+            {posts.length == 1 ? "post" : "posts"}
+          </p>
+        </div>
+      )
+    }
+  </PostGrid>
+</BaseLayout>

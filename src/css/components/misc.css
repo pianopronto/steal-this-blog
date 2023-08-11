@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .about-author {
+    @apply gap-4 text-base sm:flex md:gap-6;
+
+    & > div:first-child {
+      @apply float-left mb-6 mr-6 mt-1 flex-shrink-0 sm:float-none;
+    }
+    img {
+      @apply drop-shadow-md;
+      @apply border-2 border-transparent;
+      @apply h-[104px] w-[104px] sm:h-[154px] sm:w-[154px];
+    }
+    &__name {
+      @apply mb-4 text-xl;
+    }
+  }
+
+  .blurb {
+    @apply my-6;
+    & > a,
+    & > div {
+      @apply gap-4 sm:flex md:gap-6;
+      @apply text-stone-800 !important;
+
+      & > div:first-child {
+        @apply float-left mb-6 mr-6 mt-1 flex-shrink-0 sm:float-none;
+        img {
+          @apply drop-shadow-md;
+          @apply border-2 border-transparent;
+          @apply w-[104px] sm:w-[154px];
+        }
+      }
+      & > div:last-child {
+        @apply space-y-3;
+      }
+    }
+    & > a {
+      @apply cursor-pointer;
+      &:hover {
+        & > div:first-child img {
+          @apply border-sky-500;
+        }
+        h4 {
+          @apply text-sky-500;
+        }
+      }
+    }
+
+    & .blurb__title {
+      @apply text-lg font-semibold sm:text-2xl;
+    }
+  }
+}

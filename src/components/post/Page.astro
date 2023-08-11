@@ -1,0 +1,51 @@
+---
+import { getAuthor } from "@/content/utils";
+
+import { Image } from "astro:assets";
+
+import Content from "@/components/partials/Content.astro";
+import PostImage from "@/components/post/Image.astro";
+import PostAttributes from "@/components/post/Attributes.astro";
+import AboutAuthor from "@/components/partials/AboutAuthor.astro";
+import Tag from "@/components/partials/Tag.astro";
+
+const { post } = Astro.props;
+const { title, description, tags, series } = post.data;
+
+const author = await getAuthor(post.data.authors[0]);
+---
+
+<div class="space-y-6">
+  <div class="tags">
+    {tags.map((tag) => <Tag text={tag} link />)}
+  </div>
+  <div class="prose lg:prose-xl">
+    <h1>{title}</h1>
+    <p>{description}</p>
+  </div>
+
+  <div class="post-byline">
+    <div>
+      <Image src={author.data.avatar} alt={author.data.name} />
+    </div>
+
+    <div>
+      <div class="font-semibold">
+        <a href={`/authors/${author.slug}/`}>{author.data.name}</a>
+      </div>
+      <PostAttributes post={post} />
+    </div>
+  </div>
+
+  <PostImage post={post} />
+
+  <article class="prose pt-3 lg:prose-xl">
+    <Content content={post} />
+  </article>
+
+  <hr />
+
+  <section>
+    <AboutAuthor author={author} title={`Written by ${author.data.name}`} />
+  </section>
+</div>

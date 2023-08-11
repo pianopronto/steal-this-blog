@@ -1,0 +1,67 @@
+---
+import * as consts from "@/consts";
+
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon";
+import { Navigation } from "astro-headless-ui";
+
+import logo from "@/assets/logo.png";
+
+const links = [...consts.HEADER_MENU];
+if (import.meta.env.MODE == "development") {
+  links.push(
+    {
+      text: "Drafts",
+      href: "/tags/drafts/",
+    },
+    {
+      text: "Scheduled",
+      href: "/tags/scheduled/",
+    }
+  );
+}
+---
+
+<header class="header">
+  <div class="header__row">
+    <button class="header__hamburger">
+      <span class="sr-only">Open menu</span>
+      <Icon class="icon-menu" name="mdi:menu" />
+      <Icon class="icon-close" name="mdi:close" />
+    </button>
+
+    <a class="header__logo" href="/">
+      <Image src={logo} alt={consts.SITE_TITLE} height="30" />
+    </a>
+
+    <nav class="header__nav" aria-label="Global">
+      <Navigation
+        links={links}
+        active={{ class: "active" }}
+        defaults={{ class: "link" }}
+      />
+    </nav>
+
+    <div class="flex flex-1 lg:hidden"></div>
+
+    <a href="https://github.com/pianopronto/steal-this-blog">
+      <Icon name="mdi:github" />
+    </a>
+  </div>
+
+  <nav class="header__nav-mobile">
+    <Navigation
+      links={links}
+      active={{ class: "active" }}
+      defaults={{ class: "link" }}
+    />
+  </nav>
+</header>
+
+<script>
+  document
+    .querySelector("button.header__hamburger")
+    .addEventListener("click", () => {
+      document.querySelector("header").classList.toggle("expanded");
+    });
+</script>

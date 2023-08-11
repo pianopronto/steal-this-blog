@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-stone-800;
+  }
+  #main-content {
+    min-height: calc(100vh - 56px);
+  }
+  .layout-wide {
+    @apply mx-auto max-w-7xl px-4 pb-12 pt-6 sm:px-6 lg:px-8 lg:pt-10;
+  }
+  .layout-narrow {
+    @apply mx-auto max-w-[864px] px-4 pb-12 pt-6 sm:px-6 lg:px-8 lg:pt-10;
+  }
+  .prose {
+    @apply max-w-none !important;
+  }
+  a {
+    @apply hover:text-sky-500;
+  }
+}

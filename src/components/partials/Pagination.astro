@@ -1,0 +1,53 @@
+---
+import { Pagination } from "astro-headless-ui";
+
+const { page, url = "" } = Astro.props;
+---
+
+<nav class="pagination">
+  {
+    page.url.prev ? (
+      <a href={page.url.prev}>
+        <span aria-hidden="true">«</span>
+        <span>Previous</span>
+      </a>
+    ) : (
+      <span role="link" aria-disabled="true" class="disabled">
+        <span aria-hidden="true">«</span>
+        <span>Previous</span>
+      </span>
+    )
+  }
+
+  <Pagination index url={url} total={page.lastPage} current={page.currentPage}>
+    <active slot="active">
+      {
+        (page) => (
+          <span class="active" aria-current="page">
+            {page.number}
+          </span>
+        )
+      }
+    </active>
+    <span slot="disabled">...</span>
+    {
+      (page) => (
+        <a href={page.href + (page.number > 1 ? "/" : "")}>{page.number}</a>
+      )
+    }
+  </Pagination>
+
+  {
+    page.url.next ? (
+      <a href={page.url.next}>
+        <span>Next</span>
+        <span aria-hidden="true">»</span>
+      </a>
+    ) : (
+      <span role="link" aria-disabled="true" class="disabled">
+        <span>Next</span>
+        <span aria-hidden="true">»</span>
+      </span>
+    )
+  }
+</nav>

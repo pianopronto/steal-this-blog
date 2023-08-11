@@ -1,0 +1,29 @@
+---
+import { Image } from "astro:assets";
+
+if (Astro.props.image instanceof Promise) {
+  Astro.props.image = (await Astro.props.image).default;
+}
+
+const { href, image, title, rounded } = Astro.props;
+
+const Element = href ? "a" : "div";
+const props = href ? { href } : {};
+---
+
+<div class="not-prose blurb">
+  <Element {...props}>
+    <div>
+      <Image
+        src={image}
+        width="150"
+        alt={title}
+        class:list={[rounded && "rounded-full"]}
+      />
+    </div>
+    <div>
+      <h4 class="blurb__title">{title}</h4>
+      <slot />
+    </div>
+  </Element>
+</div>

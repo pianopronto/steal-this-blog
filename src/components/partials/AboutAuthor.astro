@@ -1,0 +1,32 @@
+---
+import { getAuthor } from "@/content/utils.js";
+
+import { Image } from "astro:assets";
+
+import placeholder from "@/assets/authors/default.png";
+
+const author =
+  typeof Astro.props.author === "string"
+    ? await getAuthor(Astro.props.author)
+    : Astro.props.author;
+const title = Astro.props.title ?? `About ${author.name}`;
+---
+
+<div class="about-author not-prose">
+  <div>
+    {
+      author.data.avatar ? (
+        <Image src={author.data.avatar} alt={author.data.name} />
+      ) : (
+        <Image src={placeholder} alt={author.data.name} />
+      )
+    }
+  </div>
+
+  <div>
+    {title && <div class="about-author__name">{title}</div>}
+    <div>
+      {author.data.bio}
+    </div>
+  </div>
+</div>

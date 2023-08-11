@@ -1,0 +1,7 @@
+@import "./base/base.css";
+@import "./base/header.css";
+@import "./base/footer.css";
+
+@import "./components/post.css";
+@import "./components/pagination.css";
+@import "./components/misc.css";

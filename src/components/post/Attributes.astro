@@ -1,0 +1,24 @@
+---
+import FormattedDate from "@/components/partials/FormattedDate.astro";
+import ReadingTime from "@/components/partials/ReadingTime.astro";
+
+const { post } = Astro.props;
+const { pubDate, updatedDate, featured } = post.data;
+---
+
+<ul class="post-ul">
+  <li>
+    <FormattedDate date={pubDate} />
+  </li>
+  {
+    !isNaN(updatedDate) && (
+      <li>
+        Updated <FormattedDate date={updatedDate} />
+      </li>
+    )
+  }
+  <li>
+    <ReadingTime post={post} />
+  </li>
+  {featured && <li>Featured</li>}
+</ul>

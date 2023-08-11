@@ -1,0 +1,38 @@
+---
+import * as consts from "@/consts";
+
+import { getCollection } from "@/content/utils";
+
+import BaseLayout from "@/components/layout/Base.astro";
+import PostGrid from "@/components/post/Grid.astro";
+
+const posts = (await getCollection("blog"))
+  .map((value) => ({ value, sort: Math.random() }))
+  .sort((a, b) => a.sort - b.sort)
+  .map(({ value }) => value);
+
+const pagination = {
+  start: 0,
+  end: consts.PAGE_SIZE - 1,
+  hide: true,
+};
+
+const description =
+  "Oops! It looks like you've ventured into uncharted territory. The page you're searching for seems to have taken a detour. Don't worry, our blog's pathways are constantly evolving. Let's get you back on track – explore our latest articles or use the navigation to find the content you're seeking.";
+
+const page = {
+  data: {
+    title: "404",
+    description,
+  },
+};
+---
+
+<BaseLayout layout="wide" page={page}>
+  <PostGrid posts={posts} layout="normal" pagination={pagination}>
+    <div class="col-span-full">
+      <h1 class="mb-4 text-7xl">404</h1>
+      <p class="text-xl">{description}</p>
+    </div>
+  </PostGrid>
+</BaseLayout>
