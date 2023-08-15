@@ -3,7 +3,7 @@ title: 'Filler Post'
 description: 'Lorem ipsum dolor sit amet'
 pubDate: 'Jan 1 2022'
 heroImage: ''
-authors: []
+author: 'houston'
 tags: ['Bar']
 featured: false
 draft: false

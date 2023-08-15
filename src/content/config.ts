@@ -1,6 +1,6 @@
 import * as consts from "@/consts";
 
-import { defineCollection, z } from "astro:content";
+import { defineCollection, reference, z } from "astro:content";
 
 const blog = defineCollection({
   schema: ({ image }) =>
@@ -16,7 +16,7 @@ const blog = defineCollection({
           .optional()
           .transform((val) => new Date(val)),
         heroImage: z.union([image(), z.string()]).optional(),
-        authors: z.array(z.string()).default([]),
+        author: reference("authors").default(consts.DEFAULT_AUTHOR),
         tags: z.array(z.string()).default([]),
         featured: z.boolean().optional(),
         draft: z.boolean().optional(),
@@ -27,9 +27,6 @@ const blog = defineCollection({
           obj.tags.push("Drafts");
         } else if (obj.pubDate > new Date()) {
           obj.tags.push("Scheduled");
-        }
-        if (obj.authors.length === 0) {
-          obj.authors.push(consts.DEFAULT_AUTHOR);
         }
         return obj;
       }),

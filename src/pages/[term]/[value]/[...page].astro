@@ -11,7 +11,7 @@ import AboutAuthor from "@/components/partials/AboutAuthor.astro";
 
 export async function getStaticPaths({ paginate, ...rest }) {
   const routes = [];
-  const terms = ["tags", "authors"];
+  const terms = ["tags", "author"];
   for (const term of terms) {
     const values = await getTaxonomy("blog", term);
     for (const { value, count } of values) {
@@ -28,19 +28,21 @@ export async function getStaticPaths({ paginate, ...rest }) {
 }
 
 const { term, value } = Astro.params;
-const { title, page: pagination } = Astro.props;
+const { page: pagination } = Astro.props;
 
-let description = null,
+let title = Astro.props.title,
+  description = null,
   image = null;
 
 switch (term) {
   case "tags":
     description = `Explore our blog for captivating articles tagged "${title}."`;
     break;
-  case "authors":
+  case "author":
     const author = await getAuthor(value);
-    description = `Explore our blog for articles posted by ${title}.`;
+    title = author.data.name;
     image = author.data.image;
+    description = `Explore our blog for articles posted by ${title}.`;
     break;
 }
 
@@ -66,7 +68,7 @@ const page = {
   >
     <div class="prose col-span-full lg:prose-xl">
       <h1>{title}</h1>
-      {term === "authors" && <AboutAuthor author={value} title="" />}
+      {term === "author" && <AboutAuthor author={value} title="" />}
       <p>
         A collection of {posts.length}
         {posts.length == 1 ? "post" : "posts"}

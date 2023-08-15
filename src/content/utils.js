@@ -35,7 +35,12 @@ export const getCollectionFilter = async (
   const items = await getCollection(type, true, reverse);
   const slug = slugify(value);
   return items.filter((item) => {
-    const values = Array.isArray(item.data[term]) ? item.data[term] : [];
+    const values = [];
+    if (Array.isArray(item.data[term])) {
+      values.push(...item.data[term]);
+    } else if (item.data[term]?.slug) {
+      values.push(item.data[term].slug);
+    }
     return values.map((value) => slugify(value)).includes(slug);
   });
 };
@@ -43,7 +48,12 @@ export const getCollectionFilter = async (
 export const getTaxonomy = async (type, term) => {
   const items = await getCollection(type);
   const taxonomy = items.reduce((acc, item) => {
-    const values = Array.isArray(item.data[term]) ? item.data[term] : [];
+    const values = [];
+    if (Array.isArray(item.data[term])) {
+      values.push(...item.data[term]);
+    } else if (item.data[term]?.slug) {
+      values.push(item.data[term].slug);
+    }
     for (let value of values) {
       const count = acc.get(value) || 0;
       acc.set(value, count + 1);
@@ -97,11 +107,6 @@ export const similarPosts = async (current) => {
   ].slice(0, 3);
 };
 
-export async function getAuthor(name) {
-  try {
-    return await getEntry("authors", slugify(name));
-  } catch {
-    // Default author
-    return await getEntry("authors", consts.DEFAULT_AUTHOR);
-  }
+export async function getAuthor(slug) {
+  return getEntry("authors", slug);
 }

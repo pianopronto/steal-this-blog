@@ -6,7 +6,7 @@ export const SITE_DESCRIPTION =
   "Explore the latest insights, tips, and trends on our blog. From expert advice to in-depth analyses, our articles cover a wide range of topics. Discover actionable strategies and stay informed with our engaging content.";
 export const COMPANY_NAME = "Acme, Inc.";
 
-export const DEFAULT_AUTHOR = "Houston";
+export const DEFAULT_AUTHOR = "houston";
 export const PAGE_SIZE = 12;
 
 export const HEADER_MENU = [

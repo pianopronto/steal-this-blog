@@ -1,12 +1,13 @@
 ---
 import * as consts from "@/consts";
+import { getAuthor } from "@/content/utils.js";
 
 import mime from "mime";
 
 const page = {
   title: "Blog",
   description: "",
-  authors: [],
+  author: "",
   tags: [],
   ...Astro.props?.page?.data,
 };
@@ -20,9 +21,10 @@ if (page.image instanceof Promise) {
 }
 page.image ??= (await import("@/assets/meta/default.png")).default;
 
-const { title, description, authors, tags, image } = page;
+const { title, description, tags, image } = page;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const author = page.author?.slug && (await getAuthor(page.author.slug));
 
 const images = {
   fb: new URL("assets/meta/fb-placeholder.jpg", Astro.site),
@@ -39,7 +41,7 @@ const images = {
 <title>{title} | {consts.COMPANY_NAME}</title>
 <meta name="description" content={description} />
 {tags && <meta name="keywords" content={tags} />}
-{authors && <meta name="author" content={authors} />}
+{author && <meta name="author" content={author.data.name} />}
 {
   image && (
     <link

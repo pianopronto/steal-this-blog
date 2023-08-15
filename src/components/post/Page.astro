@@ -12,7 +12,7 @@ import Tag from "@/components/partials/Tag.astro";
 const { post } = Astro.props;
 const { title, description, tags, series } = post.data;
 
-const author = await getAuthor(post.data.authors[0]);
+const author = await getAuthor(post.data.author.slug);
 ---
 
 <div class="space-y-6">
@@ -31,7 +31,7 @@ const author = await getAuthor(post.data.authors[0]);
 
     <div>
       <div class="font-semibold">
-        <a href={`/authors/${author.slug}/`}>{author.data.name}</a>
+        <a href={`/author/${author.slug}/`}>{author.data.name}</a>
       </div>
       <PostAttributes post={post} />
     </div>
