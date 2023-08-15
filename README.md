@@ -1,6 +1,6 @@
 # Astro Starter Kit: Steal This Blog!
 
-Files from the [Steal This Blog](https://blog.pianopronto.com/steal-this-blog-part-1) series of articles.
+Files from the [Steal This Blog](https://blog.pianopronto.com/steal-this-blog-part-1/) series of articles. [Demo](https://steal-this-blog.vercel.app/)
 
 ![screenshot](https://raw.githubusercontent.com/pianopronto/steal-this-blog/master/src/assets/demo/screenshot.png)
 
@@ -71,3 +71,5 @@ Check out the [official documentation](https://docs.astro.build) or jump into th
 ## Credit
 
 This project is based off of the [official blog starter kit](https://github.com/withastro/astro/tree/main/examples/blog).
+
+Logo font by [www.misprintedtype.com](www.misprintedtype.com)
