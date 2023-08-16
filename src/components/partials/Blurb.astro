@@ -1,4 +1,11 @@
 ---
+interface Props {
+  href?: string;
+  image: Promise<object> | object;
+  title: string;
+  rounded?: boolean;
+}
+
 import { Image } from "astro:assets";
 
 if (Astro.props.image instanceof Promise) {

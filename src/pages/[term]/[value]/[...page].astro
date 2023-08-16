@@ -41,7 +41,7 @@ switch (term) {
   case "author":
     const author = await getAuthor(value);
     title = author.data.name;
-    image = author.data.image;
+    image = author.data.avatar;
     description = `Explore our blog for articles posted by ${title}.`;
     break;
 }

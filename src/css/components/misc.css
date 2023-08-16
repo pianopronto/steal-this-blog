@@ -3,6 +3,19 @@
 @tailwind utilities;
 
 @layer components {
+  .tags {
+    @apply flex flex-wrap gap-2;
+    .tag {
+      @apply inline-flex items-center gap-1.5 rounded-md text-xs font-medium;
+      @apply bg-slate-50 shadow;
+      @apply px-2 py-1 md:px-3 md:py-1.5;
+      span {
+        @apply bg-stone-600 text-stone-50;
+        @apply rounded-md px-1 py-0.5 md:px-2 md:py-1;
+      }
+    }
+  }
+
   .about-author {
     @apply gap-4 text-base sm:flex md:gap-6;
 

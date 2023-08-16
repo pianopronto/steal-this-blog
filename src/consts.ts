@@ -8,6 +8,7 @@ export const COMPANY_NAME = "Acme, Inc.";
 
 export const DEFAULT_AUTHOR = "houston";
 export const PAGE_SIZE = 12;
+export const READING_WORDS_PER_MINUTE = 120;
 
 export const HEADER_MENU = [
   {

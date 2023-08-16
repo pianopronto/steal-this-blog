@@ -1,4 +1,11 @@
 ---
+interface Props {
+  term?: string;
+  text: string;
+  count?: number;
+  link?: boolean;
+}
+
 import { slug as slugify } from "github-slugger";
 
 const { term = "tags", text, count, link = false } = Astro.props;

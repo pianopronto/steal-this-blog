@@ -1,7 +1,11 @@
 ---
-import { getAuthor } from "@/content/utils.js";
+interface Props {
+  author: string | object;
+}
 
 import { Image } from "astro:assets";
+
+import { getAuthor } from "@/content/utils.js";
 
 import placeholder from "@/assets/authors/default.png";
 

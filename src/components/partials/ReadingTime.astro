@@ -1,8 +1,15 @@
 ---
+interface Props {
+  post: Object;
+}
+
+import * as consts from "@/consts";
 import readingTime from "reading-time";
 
 const { post } = Astro.props;
-const { text } = readingTime(post.body, { wordsPerMinute: 120 });
+const { text } = readingTime(post.body, {
+  wordsPerMinute: consts.READING_WORDS_PER_MINUTE,
+});
 ---
 
 <span>{text}</span>
